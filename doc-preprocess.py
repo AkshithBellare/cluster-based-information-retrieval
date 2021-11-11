@@ -18,6 +18,7 @@ def clean(doc):
     processed_list = []
     stop_free = " ".join([i for i in doc.lower().split() if i not in stopwords])
     punc_free = ''.join(ch for ch in stop_free if ch not in punct)
+    print(punc_free)
     
     normalized_lemmatized = " ".join(lemma.lemmatize(word) for word in punc_free.split())
     processed_lemmatized = re.sub(r"\d+", "", normalized_lemmatized)
@@ -32,8 +33,8 @@ def clean(doc):
 
 df_to_list = df.values.tolist()
 for i in range(len(df_to_list)):
-    cleaned = clean(df_to_list[i][1])
-    df_to_list[i][1] = cleaned[0]
-    df_to_list[i].append(cleaned[1])
+   cleaned = clean(df_to_list[i][1])
+   df_to_list[i][1] = cleaned[0]
+   df_to_list[i].append(cleaned[1])
 df = pd.DataFrame(df_to_list)
 df.to_csv('preprocessed-data.csv', header=['Doc Name', 'Lemmatized', 'Stemmed'])
